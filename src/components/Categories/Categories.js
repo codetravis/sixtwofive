@@ -7,7 +7,9 @@ import {
   Container,
   CssBaseline,
   Typography,
-  TextField
+  TextField,
+  Card,
+  CardContent
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
@@ -16,10 +18,16 @@ import {createTheme, ThemeProvider} from '@mui/material/styles';
 export default function Categories({setToken}) {
 
   const theme = createTheme();
-  const [email, setEmail] = useState()
-  const [password, setPassword] = useState()
+  const [language, setLanguage] = useState()
+  const [category, setCategory] = useState()
 
+  const categories = ["Animal", "Transportation", "Location", "Clothing", "Color", "People", "Job", "Art", "Beverages", 
+  "Food", "Home", "Electronics", "Body", "Nature", "Materials", "Math/Measurements", "Misc Nouns", "Directions",
+  "Seasons", "Numbers", "Months", "Days of the week", "Time", "Verbs", "Adjectives", "Pronouns"]
 
+  function goToWords() {
+    window.location('/word')
+  }
 
   return(
     <ThemeProvider theme={theme}>
@@ -35,40 +43,17 @@ export default function Categories({setToken}) {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Log In
+            Categories
           </Typography>
-          <Box component="form" noValidate sx={{ mt: 1 }}>
-              <TextField 
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                type="email"
-                placeholder="Email Address"
-                name="email"
-                autoComplete="email"
-                autofocus
-                onChange={ (e) => setEmail(e.target.value) }
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="password"
-                type="password"
-                placeholder="Password"
-                name="password"
-                autoComplete="current-password"
-                onChange={ (e) => setPassword(e.target.value) }
-              />
-              <Button 
-                type="submit" 
-                fullWidth 
-                variant="contained" 
-                sx={{ mt: 3, mb: 2 }}>
-                  Login
-                </Button>
-            </Box>
+          <Box component="div" noValidate sx={{ mt: 1 }}>
+              {categories.map( key => (
+                <Card>
+                  <CardContent onClick={() => {setCategory(key); goToWords()}}>
+                    {key}
+                  </CardContent>
+                </Card>
+              ))}
+          </Box>
         </Box>
       </Container>
     </ThemeProvider>

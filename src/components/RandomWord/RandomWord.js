@@ -12,27 +12,46 @@ import {
   CardContent
 } from '@mui/material';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
+import { useLocation } from 'react-router-dom';
 import words_by_category from './words_by_category.js'
 import translations from './translations.js'
 
 
-export default function RandomWord(props) {
-  const { language = "Spanish", category = "Animal" } = props;
+export default function RandomWord() {
   const theme = createTheme();
+  const location = useLocation()
+  const language = location.state.language || "Spanish"
+  const category = location.state.category || "Animal"
 
+  const [last_index, setLastIndex] = useState(0)
   const [base_word, setBaseWord] = useState()
   const [translation, setTranslation] = useState()
+
 
   function getRandomWord() {
     if(!category) {
       return ""
     }
+
     let category_words = words_by_category[category]
     if(!category_words) {
-      return "";
+      return ""
     }
-    let random_int = Math.floor(Math.random() * category_words.length)
-    let word = category_words[random_int]
+
+    let word = ""
+    let random_int = 0
+    if(category_words.length == 1) {
+      word = category_words[random_int]
+      setBaseWord(word)
+      return ""
+    }
+
+    random_int = Math.floor(Math.random() * category_words.length)
+    if(random_int == last_index) {
+      random_int = Math.floor(Math.random() * category_words.length)
+    }
+    setLastIndex(random_int)
+    word = category_words[random_int]
     setBaseWord(word)
 
     let language_word = translations[language][word]

@@ -11,23 +11,19 @@ import {
   Card,
   CardContent
 } from '@mui/material';
+import { Link, useLocation } from 'react-router-dom';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 
 
-export default function Categories({setToken}) {
+export default function Categories() {
 
   const theme = createTheme();
-  const [language, setLanguage] = useState()
-  const [category, setCategory] = useState()
-
+  const location = useLocation()
+  const language = location.state.language || "Spanish"
   const categories = ["Animal", "Transportation", "Location", "Clothing", "Color", "People", "Job", "Art", "Beverages", 
   "Food", "Home", "Electronics", "Body", "Nature", "Materials", "Math/Measurements", "Misc Nouns", "Directions",
   "Seasons", "Numbers", "Months", "Days of the week", "Time", "Verbs", "Adjectives", "Pronouns"]
-
-  function goToWords() {
-    window.location('/word')
-  }
 
   return(
     <ThemeProvider theme={theme}>
@@ -47,9 +43,9 @@ export default function Categories({setToken}) {
           </Typography>
           <Box component="div" noValidate sx={{ mt: 1 }}>
               {categories.map( key => (
-                <Card>
-                  <CardContent onClick={() => {setCategory(key); goToWords()}}>
-                    {key}
+                <Card key={key}>
+                  <CardContent>
+                    <Link to='/word' state={{ language: language, category: key }} >{key}</Link>
                   </CardContent>
                 </Card>
               ))}

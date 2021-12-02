@@ -4,6 +4,7 @@ import {
   Avatar,
   Box, 
   Button,
+  Grid,
   Container,
   CssBaseline,
   Typography,
@@ -27,7 +28,7 @@ export default function Categories() {
 
   return(
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="s">
         <CssBaseline/>
         <Box sx={{
           marginTop: 8,
@@ -42,13 +43,17 @@ export default function Categories() {
             Categories
           </Typography>
           <Box component="div" noValidate sx={{ mt: 1 }}>
+            <Grid container spacing={2}>
               {categories.map( key => (
-                <Card key={key}>
-                  <CardContent>
-                    <Link to='/word' state={{ language: language, category: key }} >{key}</Link>
-                  </CardContent>
-                </Card>
+                <Grid item key={key} xs={4}>
+                  <Card >
+                    <CardContent>
+                      <Link to='/word' state={{ language: language, category: key }} >{key}</Link>
+                    </CardContent>
+                  </Card>
+                </Grid>
               ))}
+            </Grid>
           </Box>
         </Box>
       </Container>
